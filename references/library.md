@@ -1,0 +1,46 @@
+# Persistent source/result library
+
+## Location and discovery
+
+Use `~/.codex/compozer-library/` across projects. `index.json` is the searchable catalog; `index.html` is an image-only gallery of draggable before/after comparisons, with accessible labels but no visible headings, captions, descriptions or metadata. Resolve `~` for the current user. Keep library assets outside the installed skill so skill updates do not erase them. Read the catalog first, then only relevant entries; do not load every image or project.
+
+## Mandatory lookup before breakdown
+
+1. For each accessible input image, compute SHA-256 and search `sourceSha256` in the catalog. Also search stable source IDs/URLs, aliases and project provenance if available. File names alone are not identity.
+2. If no exact match, search descriptions/tags for likely candidates and inspect their original images alongside the input. A resized, recompressed or cropped version can be the same reference despite a different hash. Confirm visually and record the relationship; similar style alone is not a duplicate. If pixels are unavailable, report an uncertain match rather than asserting identity.
+3. For a match, inspect its saved result, handoff, review and limitations. Reuse the code and evidence for the requested scope; fill missing screens, fix requested differences or adapt to the new scenario instead of rebuilding everything. An existing entry is not proof of fidelity or current build health. Verify reused output in the destination project when changed or integrated. Preserve declared approximations and distinguish calibration from adaptation.
+4. If the existing result fully satisfies the request, provide its pair, code and launch instructions. Do not claim a historical localhost URL is currently running. Rebuild from scratch only when explicitly requested or when the saved implementation cannot reasonably serve the task; state why. A missing or unreadable library means lookup was unavailable, not proof that no previous reconstruction exists.
+
+## Save and update
+
+Use `entries/<stable-id>/revisions/<unique-revision>/` with `entry.json` and a portable `project/` snapshot, including the source image, actual browser captures, source code/styles, permitted assets and licenses, package metadata/lockfile when available, reference model, handoff and review. Omit dependencies, build caches, credentials and unrelated project files; do not follow external symlinks. For large projects snapshot the required component closure and a runnable fixture, not the whole unrelated repository. Keep original project provenance separate from snapshot-relative paths; historical absolute paths and localhost URLs in imported reports are provenance, not live links.
+
+Record paths relative to the library root in the catalog. Include ID/revision/title, description/tags, source hash and available source URL/aliases, source/result/project/handoff/review paths, original project root, known limitations, verdict, verification provenance and launch instructions. Store calibration and adaptation images under distinct fields if both exist. Never fabricate a missing original or screenshot: use null with a reason and mark the pair incomplete. Import supplied results with their reported verdict explicitly attributed; do not upgrade imported claims to freshly verified checks.
+
+For a known reference, append a revision only when code or evidence changes; repeated imports of identical artifacts should reuse the existing revision. Preserve old revisions and unrelated entries. Add confirmed alternate source hashes/URLs as aliases. Update the catalog without overwriting other records, use atomic replacement, and regenerate the gallery from all current entries. A missing library may be initialized; a malformed existing index must be preserved and repaired, not silently replaced.
+
+Verify saved files, hashes, JSON syntax and catalog/gallery links. Report the saved entry and any incomplete pair or unavailable storage; if global writes are blocked, retain a pending export in the workspace and report its actual location. Library storage never implies deployment or publication. Consult entries as reusable evidence, not as authority to copy an unrelated style into a new reference.
+
+## Preview navigation and visual gallery
+
+Every completed reconstruction desktop preview includes an icon-only Lucide Library control in the upper-right corner of the preview shell (at least 44×44 px hit area, accessible name “Библиотека Compozer”, keyboard focus). Keep it separate from the reference UI, outside calibration screenshots and exported screen components. It opens the library; do not link to an unverified localhost port. HTTP previews cannot reliably open file URLs: serve the local library through a verified local route/server or a project preview route, retaining relative asset paths. Verify the actual click destination in the browser. Do not expose arbitrary filesystem paths through a public server or deploy the library implicitly.
+
+The library displays only reference images and slider handles, without visible text, labels, headings, reports or metadata. Preserve all searchable metadata, code links, provenance and limitations in index.json and entry records; removing UI text must not delete them. Use the 21st Image Compare component by 0xuser64bit (https://21st.dev/@0xuser64bit/components/image-compare), whose retrieved source and adaptation provenance are stored under the library's vendor directory. The current static gallery adapts its overlapping-image, clipping and pointer-capture behavior for offline HTML. Keep accessible image descriptions and keyboard-operable ranges despite the text-free appearance.
+
+Regenerate all current pairs with `python3 ~/.codex/compozer-library/scripts/render_gallery.py` after catalog updates; preserve entries and archived revisions. Source is on the left, rendered result on the right, with a draggable divider initially centered. Support pointer, touch and keyboard input, visible focus, and responsive image sizing. Align image coordinate frames; never stretch or crop an image just to force a false match. If frames differ, use an evidenced mapping or preserve the entire image with contain sizing and record the mismatch. Verify image loading, slider endpoints, keyboard operation and mobile layout. Keep third-party provenance outside the visible gallery.
+
+Treat index.html as generated output: never replace it with a hand-written importer gallery. After any library import, run the existing render_gallery.py and check that the output contains one range control per complete pair and no visible text nodes outside scripts/styles. Preserve the existing gallery renderer when adding entries.
+
+## Gallery appearance and reuse action
+
+Keep the gallery background dark (#111214), with three columns on desktop, two on tablet and one on narrow mobile screens. Keep preview images unaltered. Each preview has an accessible icon-only Lucide Repeat control in its top-right corner, separate from the comparison slider hit target. On click, copy a ready-to-paste Compozer request containing the stable reference ID, exact revision, library location, source/result, handoff and code paths. Confirm copying with a check icon; if clipboard access fails, offer the request as a downloaded text file. Do not claim to have reused or changed a project merely because the request was copied.
+
+The user pastes the request into the destination project's chat and supplies the adaptation task. Reuse existing components/assets after reviewing limitations, work in the destination project, and preserve archived revisions. Copying a request does not automatically start another chat or send a message. Keep descriptions and reuse instructions out of the visible gallery; retain accessible names and hover hints.
+
+For mobile reconstruction previews, apply preview-shell.md: control-free mobile design shell with automatically inferred platform. Keep the Library shortcut on desktop only. The gallery comparison uses calibration output; store staged-preview captures separately.
+
+After adding a Vite configuration to an already running project, restart that project server explicitly. Verify the Library href returns the actual gallery HTML (comparison ranges), not the SPA fallback with HTTP 200; verify an image URL under the same prefix. Configure dev and preview middleware when both are used.
+
+## Open preview action
+
+Each gallery card includes a second icon-only external-link control next to Reuse, with a 44×44 px hit area, accessible name and hover hint, but no visible text. Open the interactive staged preview in a new tab with noopener/noreferrer. Keep this link separate from both the comparison slider and the copy-request button. Use the stored HTTP(S) preview.url, or historicalUrl as a clearly described local-server address; never invent a port or link to a file path for a running app. Verify the endpoint when saving a new preview address and record the verification time; a past check does not guarantee a running server later. If no URL exists, retain a disabled icon with an accessible explanation. Do not silently start a process or deploy when a gallery link is clicked. Store launch instructions in metadata. Preserve these icon-only actions when regenerating the gallery.

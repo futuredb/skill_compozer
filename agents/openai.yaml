@@ -1,0 +1,4 @@
+interface:
+  display_name: "Compozer"
+  short_description: "Reconstruct reference images directly as reusable UI code"
+  default_prompt: "Use $compozer to reconstruct selected reference images as reusable React components and verify the browser preview."
